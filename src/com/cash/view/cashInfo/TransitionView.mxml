@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:cashInfo="com.cash.view.cashInfo.*" xmlns:cashItem="com.cash.view.cashItem.*">
+	<cashInfo:CashInfo id="info" width="100%" height="100%"/>
+	<cashItem:CashItem id="item" width="100%" height="100%"/>
+</mx:Canvas>

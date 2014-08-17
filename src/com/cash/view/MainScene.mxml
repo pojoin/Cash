@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="mainStyle"
+	xmlns:view="com.cash.view.*" 
+	xmlns:cashInfo="com.cash.view.cashInfo.*">
+	<mx:Style source="/com/cash/view/main.css"/>
+	<mx:VBox width="100%" height="100%">
+		<mx:ApplicationControlBar width="100%" height="5%" visible="true"/>
+		<mx:HDividedBox width="100%" height="95%">
+			<mx:VBox width="20%" height="100%">
+				<view:UserInfo width="100%" height="15%"/>
+				<view:CashAccordion width="100%" height="85%"/>
+			</mx:VBox>
+			<mx:Canvas width="80%" height="100%">
+				<mx:VBox width="100%" height="100%">
+					<view:MainMenuBar width="100%" height="10%"/>
+					<cashInfo:TransitionView width="100%" height="90%"/>
+				</mx:VBox>
+			</mx:Canvas>
+		</mx:HDividedBox>
+	</mx:VBox>
+</mx:Canvas>

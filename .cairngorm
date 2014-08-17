@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cairngorm locationId="f9e4825c-4dca-41ed-b13d-f4969e157ca7">
+  <commandSuperclass></commandSuperclass>
+  <controllers>
+    <controller controllerId="1422eaac-9ba3-4328-b44d-0597f464fa5b">
+      <function>initialiseCommands</function>
+      <events>com.cash.event</events>
+      <commands>com.cash.command</commands>
+    </controller>
+  </controllers>
+</cairngorm>

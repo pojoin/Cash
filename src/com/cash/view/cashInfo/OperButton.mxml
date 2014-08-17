@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" horizontalAlign="center">
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.cash.vo.Info;
+			import com.cash.model.InfoModel;
+			private var infoModel:InfoModel = InfoModel.getInstance();
+			
+			private function edit(evt:Event):void{
+				infoModel.info = data as Info;
+				CairngormEventDispatcher.getInstance().dispatchEvent(new CairngormEvent("requestInfoUpdate"));
+			}
+		]]>
+	</mx:Script>
+	<mx:Image source="/images/xiugai.png" toolTip="修改" click="edit(event);"/>
+</mx:HBox>

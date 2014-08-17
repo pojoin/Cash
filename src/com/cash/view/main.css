@@ -1,0 +1,14 @@
+/* CSS file */
+ .mainStyle{
+ 	font-size:12px;	
+	modal-transparency: 0;
+	background-image: Embed(source="/images/bg.jpg"); 
+	background-size: "100%";
+ }
+ 
+ .loginForm{
+ 	font-size:12px;	
+	modal-transparency: 0;
+	background-image: Embed(source="/images/bg_login.jpg"); 
+	background-size: "100%";
+ }

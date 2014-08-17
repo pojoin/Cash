@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication title="个人财务管理软件-Cash(pojoin)" initialize="init();"
+	 xmlns:mx="http://www.adobe.com/2006/mxml" 
+	 xmlns:control="com.cash.control.*" 
+	 layout="absolute" xmlns:view="com.cash.view.*">
+	 
+	 <mx:Script>
+	 	<![CDATA[
+	 		import com.cash.event.PageEvent;
+	 		import com.cash.common.util.EntityManager;
+	 		import com.cash.model.UserModel;
+	 		private function init():void{
+	 			var userModel:UserModel = UserModel.getInstance();
+	 			userModel.setViewStack(main_vs);
+	 			
+	 			var em:EntityManager = EntityManager.getInstance();
+	 			var file:File = File.userDirectory.resolvePath("contact.db");
+	 			var sqlConnection:SQLConnection = new SQLConnection();
+	 			sqlConnection.open(file);
+	 			em.sqlConnection = sqlConnection;
+	 		}
+	 	]]>
+	 </mx:Script>
+	<control:CashController id="cashController"/>
+	<mx:ViewStack width="100%" height="100%" id="main_vs">
+		<view:LoginForm width="100%" height="100%"/>
+		<view:MainScene width="100%" height="100%"/>
+	</mx:ViewStack>
+</mx:WindowedApplication>

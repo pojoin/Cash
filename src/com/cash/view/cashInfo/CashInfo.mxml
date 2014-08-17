@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:cashInfo="com.cash.view.cashInfo.*">
+	<mx:VBox width="100%" height="100%">
+		<cashInfo:CashInfoMenuBar width="100%" height="5%"/>
+		<cashInfo:CashInfoTable width="100%" height="90%" alpha="0.7"/>
+		<cashInfo:CashPageInfo width="100%" height="5%"/>
+	</mx:VBox>
+</mx:Canvas>

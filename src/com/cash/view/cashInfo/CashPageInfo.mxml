@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ControlBar xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+
+	<mx:Script>
+		<![CDATA[
+			import com.cash.event.PageEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.cash.model.PageModel;
+			[Bindable]
+			private var pageModel:PageModel = PageModel.getInstance();
+			private function gotoFirst(e:Event):void{
+				if(this.pageModel.pageNo != 1){
+					this.pageModel.pageNo = 1;
+					this.setState();
+				}
+			}
+			
+			private function previous(e:Event):void{
+				if(this.pageModel.pageNo > 1){
+					this.pageModel.pageNo = this.pageModel.getPagePrevious();
+					this.setState();
+				}
+			}
+			
+			private function next(e:Event):void{
+				if(this.pageModel.pageNo < this.pageModel.pageCount){
+					this.pageModel.pageNo = this.pageModel.getPageNext();
+					this.setState();
+				}
+			}
+			
+			private function gotoEnd(e:Event):void{
+				if(this.pageModel.pageNo != this.pageModel.pageCount){
+					this.pageModel.pageNo = this.pageModel.pageCount;
+					this.setState();
+				}
+			}
+			
+			private function choosePageNo(e:Event):void{
+				this.pageModel.pageNo = comboBox.selectedItem.num as int;
+				this.setState();
+			}
+			
+			private function setState():void{
+				CairngormEventDispatcher.getInstance().dispatchEvent(new PageEvent(PageEvent.INFO_PAGECHANGE_EVENT));
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%" height="100%">
+		<mx:Button label="&lt;&lt;" click="gotoFirst(event);"/>
+		<mx:Button label="&lt;" click="previous(event);"/>
+		<mx:ComboBox id="comboBox" dataProvider="{pageModel.comboBoxData}" selectedIndex="{pageModel.comboBoxSelectIndex}" labelField="num" change="choosePageNo(event);"/>
+		<mx:Button label="&gt;" click="next(event);"/>
+		<mx:Button label="&gt;&gt;" click="gotoEnd(event);"/>
+		<mx:Label text="共{pageModel.resultCount}条数据    每页显示{pageModel.pageSize}条数据" color="#fff"/>
+	</mx:HBox>
+</mx:ControlBar>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" width="450" height="350"
+	showCloseButton="true" close="closePanel(event);" title="新增信息"
+	initialize="addEventListenerForThis();"
+	cornerRadius="8">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.cash.event.InfoEvent;
+			import com.cash.vo.Info;
+			import com.cash.common.xsive.managers.CocoaPopUpManager;
+			import com.adobe.cairngorm.control.CairngormEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			
+			//添加监听
+			private function addEventListenerForThis():void{
+				CairngormEventDispatcher.getInstance().addEventListener("closeInfoForm",closePanel);
+			}
+			
+			//关闭本窗口
+			private function closePanel(e:Event):void{
+				CairngormEventDispatcher.getInstance().removeEventListener("closeInfoForm",closePanel);
+				CocoaPopUpManager.removePopUp(this);
+			}
+			
+			private function save(e:Event):void{
+				var info:Info = new Info();
+				info.money = money.text;
+				info.type = type.text;
+				info.remark = remark.text;
+				var infoEvent:InfoEvent = new InfoEvent(InfoEvent.ADDINFO_EVENT,info);
+				CairngormEventDispatcher.getInstance().dispatchEvent(infoEvent);
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:VBox width="100%" height="100%">
+		<mx:Form width="100%" height="90%" >
+			<mx:FormItem label="金额">
+				<mx:TextInput id="money"/>
+			</mx:FormItem>
+			<mx:FormItem label="收入/支出">
+				<mx:TextInput id="type"/>
+			</mx:FormItem>
+			<mx:FormItem label="备注">
+				<mx:TextInput id="remark"/>
+			</mx:FormItem>
+		</mx:Form> 
+		<mx:HBox width="100%" height="10%">
+			<mx:Button label="保存" click="save(event);"/>
+			<mx:Button label="取消" click="closePanel(event);"/>
+		</mx:HBox>
+	</mx:VBox>
+</mx:TitleWindow>

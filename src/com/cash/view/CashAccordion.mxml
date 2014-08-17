@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" 
+	xmlns:treeUtil="com.cash.common.treeUtil.*"
+	initialize="init();">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import com.cash.event.ItemTreeEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.cash.model.TreeModel;
+			[Bindable]
+			private var treeModel:TreeModel = TreeModel.getInstance();
+			private var c:CairngormEventDispatcher = CairngormEventDispatcher.getInstance();
+			//初始化
+			private function init():void{
+				c.dispatchEvent(new ItemTreeEvent(ItemTreeEvent.LOADITEMTREEDATA));
+			}
+			
+			private function addItem(e:Event):void{
+				
+			}
+		]]>
+	</mx:Script>
+	<mx:Accordion width="100%" height="100%" selectedIndex="1" alpha="0.7">
+		<mx:VBox width="100%" height="100%" label="系统管理">
+			<mx:LinkButton label="事项管理" width="100%" textAlign="left" click="addItem(event);"/>
+		</mx:VBox>
+		<mx:VBox width="100%" height="100%" label="类型" alpha="0.7">
+			<mx:Tree width="100%" height="100%" showRoot="true" labelField="name" dataProvider="{treeModel.treeDate}">
+				<mx:dataDescriptor>
+					<treeUtil:TreeDataDescriptor childrenField="childNodes"/>
+				</mx:dataDescriptor>
+			</mx:Tree>
+		</mx:VBox>
+	</mx:Accordion>
+</mx:Panel>

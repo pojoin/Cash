@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" width="450" height="350"
+	showCloseButton="true" close="closePanel(event);" title="注册"
+	initialize="addEventListenerForThis();"
+	cornerRadius="8">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.cash.event.RegisterEvent;
+			import com.cash.vo.User;
+			import com.cash.common.xsive.managers.CocoaPopUpManager;
+			private function closePanel(e:Event):void{
+				CairngormEventDispatcher.getInstance().removeEventListener("closeRegisterForm",closePanel);
+				CocoaPopUpManager.removePopUp(this);
+			}
+			
+			
+			private function register(e:Event):void{
+				var user:User = new User();
+				user.loginName = loginName.text;
+				user.password = password.text;
+				user.nickName = nickName.text;
+				var registerEvent:RegisterEvent = new RegisterEvent(user);
+				CairngormEventDispatcher.getInstance().dispatchEvent(registerEvent);
+				user = null;
+			}
+			
+			private function addEventListenerForThis():void{
+				CairngormEventDispatcher.getInstance().addEventListener("closeRegisterForm",closePanel);;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="100%" height="100%">
+		<mx:HBox width="100%" height="90%">
+			<mx:Form width="40%" height="100%">
+				<mx:FormItem label="账号：">
+					<mx:TextInput id="loginName"/>
+				</mx:FormItem>
+				<mx:FormItem label="密码：">
+					<mx:TextInput id="password" displayAsPassword="true"/>
+				</mx:FormItem>
+				<mx:FormItem label="姓名：">
+					<mx:TextInput id="nickName"/>
+				</mx:FormItem>
+			</mx:Form>
+			<mx:VBox width="50%" height="100%">
+				<mx:Image width="140" height="160"/>
+			</mx:VBox>
+		</mx:HBox>
+		<mx:HBox width="100%" height="10%" horizontalAlign="center" verticalAlign="middle">
+			<mx:Button label="注册" click="register(event);"/>
+			<mx:Button label="重置"/>
+		</mx:HBox>
+	</mx:VBox>
+</mx:TitleWindow>

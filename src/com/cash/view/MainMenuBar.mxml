@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:core="com.cash.common.outsmart.dock.core.*">
+	<!-- - - - - - - - - - - - - -
+	-
+	- styles
+	-
+	- - - - - - - - - - - - - - - - -->
+
+	<mx:Style>
+		.verticalDock {
+			minimumSize:			32;
+			maximumSize:			48;
+			scaleRange:				150;
+			labelPosition:			right;
+			verticalLabelAlign:		top;
+			labelGap:				15;
+			labelAppearanceDelay:	500;
+
+			horizontalAlign:		center;
+			verticalAlign:			middle;
+			verticalGap:			5;
+			paddingLeft:			5;
+		}
+
+		.horizontalDock {
+			minimumSize:			32;
+			maximumSize:			48;
+			scaleRange:				40;
+			labelPosition:			top;
+			horizontalLabelAlign:	center;
+			labelGap:				10;
+			labelAppearanceDelay:	0;
+
+			horizontalAlign:		center;
+			verticalAlign:			bottom;
+			paddingBottom:			5;
+			horizontalGap:			5;
+		}
+
+	</mx:Style>
+	
+	<!-- - - - - - - - - - - - - -
+	-
+	- scripts
+	-
+	- - - - - - - - - - - - - - - - -->
+
+	<mx:Script>
+		<![CDATA[
+			import com.cash.common.outsmart.DockLabel;
+			import com.cash.common.outsmart.DockItem;
+			import com.cash.common.outsmart.dock.events.DockItemEvent;
+			import mx.controls.Alert;
+
+			import mx.collections.ArrayCollection;
+			[Bindable] private var itemRenderer:ClassFactory = new ClassFactory(DockItem);
+			[Bindable] private var labelRenderer:ClassFactory = new ClassFactory(DockLabel);
+
+			[Bindable] private var dataProvider:ArrayCollection = new ArrayCollection([
+				{url:"icons/camera.png", title:"SLR Camera"},
+				{url:"icons/disc.png", title:"DVD Disc"},
+				{url:"icons/dvddrive.png", title:"DVD Drive"},
+				{url:"icons/fax.png", title:"Fax"},
+				{url:"icons/floppy.png", title:"Floppy Disc"},
+				{url:"icons/floppydrive.png", title:"Floppy Drive"},
+				{url:"icons/imac.png", title:"Apple iMac"},
+				{url:"icons/laptop.png", title:"Laptop"},
+				{url:"icons/mobilephone.png", title:"Mobile Phone"},
+				{url:"icons/modem.png", title:"Modem"},
+				{url:"icons/pendrive.png", title:"USB Pendrive"},
+				{url:"icons/playstation.png", title:"Sony Playstation 3"},
+				{url:"icons/printer.png", title:"Inkjet Printer"},
+				{url:"icons/psp.png", title:"Sony Playstation Portable"},
+			]);
+
+			private function itemSelectedHandler(event:DockItemEvent):void {
+				Alert.show("Item " + event.index + " selected (" + dataProvider.getItemAt(event.index).title + ")");
+			}
+
+		]]>
+	</mx:Script>
+	
+	
+	<!-- - - - - - - - - - - - - -
+	-
+	- components
+	-
+	- - - - - - - - - - - - - - - - -->
+
+	<!-- dock -->
+	
+	<core:Dock id="hdock" styleName="horizontalDock" 
+		fixed="true" dockSide="bottom"
+		dataProvider="{dataProvider}" 
+		itemRenderer="{itemRenderer}" labelRenderer="{labelRenderer}" labelField="title"
+		dockItemClick="itemSelectedHandler(event)" 
+	 	bottom="0" height="80%" right="0" left="0"
+	 />
+</mx:ApplicationControlBar>

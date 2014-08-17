@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" initialize="init();">
+	<mx:Script>
+		<![CDATA[
+			import com.cash.model.InfoModel;
+			import mx.core.Application;
+			import com.cash.common.xsive.managers.CocoaPopUpManager;
+			import com.cash.event.InfoEvent;
+			import mx.events.CloseEvent;
+			import mx.controls.Alert;
+			import com.cash.event.PageEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.cash.model.PageModel;
+			[Bindable]
+			private var pageModel:PageModel = PageModel.getInstance();
+			private var c:CairngormEventDispatcher = CairngormEventDispatcher.getInstance();
+			private function init():void{
+				c.dispatchEvent(new PageEvent(PageEvent.INFO_PAGECHANGE_EVENT));
+				c.addEventListener("requestInfoUpdate",update);
+				c.addEventListener("requestInfoLoad",load);
+				c.addEventListener("requestRemove",remove);
+			}
+			
+			//加载数据
+			private function load(e:Event):void{
+				c.dispatchEvent(new InfoEvent(InfoEvent.LOADiNFO_EVENT));
+			}
+			
+			//更新
+			private function update(e:Event):void{
+				var editInfo:EditInfo = new EditInfo();
+				CocoaPopUpManager.addPopUp(editInfo,Sprite(Application.application),false);
+				editInfo = null;
+			}
+			
+			//删除
+			private function remove(e:Event):void{
+				var selectedInfo:Array = this.dg.selectedItems;
+				if(selectedInfo != null && selectedInfo.length > 0){
+					Alert.show("你确定要删除所选信息吗？","提示信息",Alert.YES|Alert.NO,this,
+					function del(evt:CloseEvent){
+						if(evt.detail == Alert.YES){
+							var infoEvent:InfoEvent = new InfoEvent(InfoEvent.DELINFO_EVENT);
+							infoEvent.data = selectedInfo;
+							c.dispatchEvent(infoEvent);
+						}
+					}
+					,null,Alert.YES);
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:DataGrid id="dg" width="100%" height="100%" allowMultipleSelection="true" selectionColor="#b392f5" rowCount="5" dataProvider="{pageModel.data}">
+		<mx:columns>
+			<mx:DataGridColumn headerText="金额（元）" dataField="money" textAlign="left"/>
+			<mx:DataGridColumn headerText="收入／支出" dataField="type" textAlign="left"/>
+			<mx:DataGridColumn headerText="事项" dataField="itemId" textAlign="left"/>
+			<mx:DataGridColumn headerText="时间" dataField="createTime" textAlign="left"/>
+			<mx:DataGridColumn headerText="操作" textAlign="center" itemRenderer="com.cash.view.cashInfo.OperButton"/>
+		</mx:columns>
+	</mx:DataGrid>
+</mx:Canvas>
